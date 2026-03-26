@@ -65,10 +65,22 @@ export default function SignUpPage() {
 
         <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           {success ? (
-            <div className="text-center">
-              <div className="mb-4 rounded-lg bg-green-100 p-4 text-green-800">
-                Account created successfully! Redirecting to login...
+            <div className="text-center space-y-4">
+              <div className="rounded-lg bg-green-100 p-4 text-green-800">
+                <p className="font-semibold">Account created successfully!</p>
+                <p className="text-sm mt-2">
+                  Check your email for a confirmation link. Please confirm your email to activate your account.
+                </p>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Once confirmed, you can sign in with your credentials.
+              </p>
+              <Link 
+                href="/login" 
+                className="inline-block mt-4 rounded-2xl bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              >
+                Go to Login
+              </Link>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">

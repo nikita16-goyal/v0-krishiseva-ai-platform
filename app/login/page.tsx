@@ -78,8 +78,11 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
-                {error}
+              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive space-y-2">
+                <p>{error}</p>
+                {error.includes("Email not confirmed") && (
+                  <p className="text-xs">Please check your email and click the confirmation link to activate your account.</p>
+                )}
               </div>
             )}
 
