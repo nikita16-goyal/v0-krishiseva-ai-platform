@@ -1,7 +1,32 @@
+'use client'
+
 import Link from "next/link"
 import { Leaf } from "lucide-react"
+import { useState } from "react"
+import { signIn } from "@/app/actions/auth"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+
+    try {
+      await signIn(email, password)
+      router.push("/dashboard")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to sign in")
+      setLoading(false)
+    }
+  }
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
@@ -16,7 +41,7 @@ export default function LoginPage() {
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
-          <form className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className="text-sm font-medium text-foreground">
                 Email Address
@@ -25,6 +50,9 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="farmer@krishiseva.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 className="rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
@@ -37,16 +65,25 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
                 className="rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
 
-            {/* Placeholder: Connect to auth backend */}
+            {error && (
+              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+                {error}
+              </div>
+            )}
+
             <button
-              type="button"
-              className="mt-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+              type="submit"
+              disabled={loading}
+              className="mt-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
           </form>
 

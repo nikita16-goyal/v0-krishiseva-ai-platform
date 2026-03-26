@@ -12,6 +12,33 @@ import {
   Leaf,
   LogOut,
 } from "lucide-react"
+import { signOut } from "@/app/actions/auth"
+import { useState } from "react"
+
+function SignOutButton() {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSignOut = async () => {
+    setIsLoading(true)
+    try {
+      await signOut()
+    } catch (error) {
+      console.error("Sign out failed:", error)
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <button
+      onClick={handleSignOut}
+      disabled={isLoading}
+      className="w-full flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground disabled:opacity-50"
+    >
+      <LogOut className="h-4 w-4" />
+      {isLoading ? "Signing Out..." : "Sign Out"}
+    </button>
+  )
+}
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -57,7 +84,7 @@ export function DashboardSidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="border-t border-sidebar-border px-3 py-4">
+      <div className="border-t border-sidebar-border px-3 py-4 space-y-2">
         <Link
           href="/"
           className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
@@ -65,6 +92,7 @@ export function DashboardSidebar() {
           <LogOut className="h-4 w-4" />
           Back to Home
         </Link>
+        <SignOutButton />
       </div>
     </aside>
   )
