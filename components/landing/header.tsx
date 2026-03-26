@@ -4,12 +4,15 @@ import Link from "next/link"
 import { Leaf } from "lucide-react"
 import { useAuth } from "@/hooks/useAuth"
 import { signOut } from "@/app/actions/auth"
+import { useRouter } from "next/navigation"
 
 export function Header() {
   const { user } = useAuth()
+  const router = useRouter()
 
   const handleSignOut = async () => {
     await signOut()
+    router.push("/")
   }
 
   return (

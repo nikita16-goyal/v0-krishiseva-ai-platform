@@ -14,14 +14,17 @@ import {
 } from "lucide-react"
 import { signOut } from "@/app/actions/auth"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 function SignOutButton() {
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleSignOut = async () => {
     setIsLoading(true)
     try {
       await signOut()
+      router.push("/")
     } catch (error) {
       console.error("Sign out failed:", error)
       setIsLoading(false)

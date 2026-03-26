@@ -19,8 +19,13 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      await signIn(email, password)
-      router.push("/dashboard")
+      const result = await signIn(email, password)
+      if (result.success) {
+        // Wait a moment for session to be established
+        setTimeout(() => {
+          router.push("/dashboard")
+        }, 100)
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to sign in")
       setLoading(false)
