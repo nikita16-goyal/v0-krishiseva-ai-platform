@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { Leaf } from "lucide-react"
+import { Leaf, ArrowLeft } from "lucide-react"
 import { useState } from "react"
 import { signUp } from "@/app/actions/auth"
 import { useRouter } from "next/navigation"
@@ -53,6 +53,10 @@ export default function SignUpPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
+        <Link href="/" className="inline-flex items-center gap-2 mb-6 text-primary hover:text-primary/80">
+          <ArrowLeft className="h-4 w-4" />
+          <span className="text-sm font-medium">Back to Home</span>
+        </Link>
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2">
             <Leaf className="h-8 w-8 text-primary" />
