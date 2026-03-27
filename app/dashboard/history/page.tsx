@@ -1,4 +1,9 @@
+'use client'
+
 import { Clock, Sprout, CloudSun } from "lucide-react"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 const mockHistory = [
   {
@@ -32,6 +37,23 @@ const mockHistory = [
 ]
 
 export default function HistoryPage() {
+  const { user, isLoading } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login")
+    }
+  }, [user, isLoading, router])
+
+  if (isLoading || !user) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <div>
