@@ -34,8 +34,20 @@ export default function DashboardPage() {
       {/* Yield + Recommendations Row */}
       <div className="grid gap-6 lg:grid-cols-2">
         <YieldChart data={yieldPredictions} />
-        <RecommendationPanel predictedCrops={predictedCrops} />
-      </div>
-    </div>
+        <div style={{ marginTop: "20px" }}>
+  <h2 className="text-lg font-semibold mb-2">
+    🌾 AI Crop Recommendation
+  </h2>
+
+  <iframe
+    src="https://099e61d0e9685edfc.gradio.live"
+    width="100%"
+    height="600px"
+    style={{
+      border: "none",
+      borderRadius: "12px"
+    }}
+  ></iframe>
+</div>
   )
 }
